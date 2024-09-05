@@ -18,6 +18,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Security from './pages/Security';
 import ChangePassword from './pages/ChangePassword';
 import About from './pages/About';
+import ServiceDetail from './pages/ServiceDetail';  
+import BroadbandDetails from './pages/BroadbandDetails';
+import DIAServiceDetails from './pages/DIAServiceDetails';
+import EPLServiceDetails from './pages/EPLServiceDetails';
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -32,22 +36,63 @@ const App = () => {
       <Router>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           <Header toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
-          <Container component="main" sx={{ flexGrow: 1, p: 3, mt: '130px' }}>
-            <Breadcrumb />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/personal-data" element={<PersonalData />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/financial-history" element={<FinancialHistory />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/security" element={<Security />} />
-              <Route path="/change-password" element={<ChangePassword />} />
-              <Route path="/about" element={<About />} />
-            </Routes>
-          </Container>
+          <Routes>
+            <Route
+              path="/services/broadband"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <BroadbandDetails />
+                </>
+              }
+            />
+            <Route
+              path="/services/dia"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <DIAServiceDetails />
+                </>
+              }
+            />
+            <Route
+              path="/services/epl"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <EPLServiceDetails />
+                </>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Container component="main" sx={{ flexGrow: 1, mt: '130px' }}>
+                  <Breadcrumb />
+                  <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/services/:serviceName" element={<ServiceDetail />} /> 
+                    <Route path="/support" element={<Support />} />
+                    <Route path="/personal-data" element={<PersonalData />} />
+                    <Route path="/projects" element={<Projects />} />
+                    <Route path="/financial-history" element={<FinancialHistory />} />
+                    <Route path="/alerts" element={<Alerts />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/security" element={<Security />} />
+                    <Route path="/change-password" element={<ChangePassword />} />
+                    <Route path="/about" element={<About />} />
+                  </Routes>
+                </Container>
+              }
+            />
+          </Routes>
           <Footer />
         </Box>
       </Router>

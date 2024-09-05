@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Card, CardContent } from '@mui/material';
+import { Grid, Card, CardContent, Container } from '@mui/material';
 import PersonalData from '../components/PersonalData';
 import ProjectsUser from '../components/ProjectsUser';
 import ServicesDashboard from '../components/ServicesDashboard';
@@ -12,7 +12,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-      <CardContent sx={{ padding: '20px 30px 0px 30px', marginBottom: '0px' }}>
+      <Container  sx={{ width: '100%', mt: 2 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8} lg={8}>
             <ProjectsUser userName={userName} />
@@ -20,11 +20,11 @@ const Dashboard = () => {
           <Grid item xs={12} md={4} lg={4}>
             <PersonalData />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ padding: '20px 0px 20px 0px', marginBottom: '0px' }}>
             <ServicesDashboard />
           </Grid>
         </Grid>
-      </CardContent>
+      </Container>
   );
 };
 

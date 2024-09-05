@@ -12,23 +12,22 @@ const Footer = () => {
     <Box component="footer" sx={{ bgcolor: '#F0F0F2', pt: 6, borderRadius: '90px 90px 0 0' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
-              Column 1
+              Services
             </Typography>
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 1</Link>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 2</Link>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 3</Link>
+            <Link href="/services/epl" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+              EPL
+            </Link>
+            <Link href="/services/dia" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+              DIA
+            </Link>
+            <Link href="/services/broadband" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+              Broadband Service Details
+            </Link>
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h6" gutterBottom>
-              Column 2
-            </Typography>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 1</Link>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 2</Link>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 3</Link>
-          </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Column 3
             </Typography>
@@ -36,7 +35,7 @@ const Footer = () => {
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 2</Link>
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 3</Link>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Follow Us
             </Typography>
