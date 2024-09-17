@@ -14,27 +14,29 @@ const Footer = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
-              Services
+              Services Details
             </Typography>
-            <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 1</Link>
+            <Link href="/services/dia" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+            DIA
+            </Link>
             <Link href="/services/epl" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
               EPL
             </Link>
-            <Link href="/services/dia" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
-              DIA
-            </Link>
             <Link href="/services/broadband" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
-              Broadband Service Details
+              BROADBAND
+            </Link>
+            <Link href="/services/ports" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+             PORTS
             </Link>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          {/* <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Column 3
             </Typography>
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 1</Link>
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 2</Link>
             <Link href="/" sx={{ display: 'block', mb: 1 }}>Link 3</Link>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Follow Us

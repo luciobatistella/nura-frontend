@@ -18,10 +18,11 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Security from './pages/Security';
 import ChangePassword from './pages/ChangePassword';
 import About from './pages/About';
-import ServiceDetail from './pages/ServiceDetail';  
+import ServiceDetail from './pages/ServiceDetail';
 import BroadbandDetails from './pages/BroadbandDetails';
 import DIAServiceDetails from './pages/DIAServiceDetails';
 import EPLServiceDetails from './pages/EPLServiceDetails';
+import PortsServiceDetails from './pages/PortsServiceDetails';
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -71,6 +72,17 @@ const App = () => {
               }
             />
             <Route
+              path="/services/ports"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <PortsServiceDetails />
+                </>
+              }
+            />
+            <Route
               path="*"
               element={
                 <Container component="main" sx={{ flexGrow: 1, mt: '130px' }}>
@@ -78,7 +90,7 @@ const App = () => {
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/services" element={<Services />} />
-                    <Route path="/services/:serviceName" element={<ServiceDetail />} /> 
+                    <Route path="/services/:serviceName" element={<ServiceDetail />} />
                     <Route path="/support" element={<Support />} />
                     <Route path="/personal-data" element={<PersonalData />} />
                     <Route path="/projects" element={<Projects />} />

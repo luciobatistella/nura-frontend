@@ -27,56 +27,19 @@ const DIAServiceDetails = () => {
                                 Speed, Reliability and  <Typography variant="h4" sx={{ color: '#7367EF', fontWeight: 'bold', paddingLeft: '10px' }}>Security Exclusively</Typography>
                             </Typography>
                             <Grid container spacing={4}>
-                                <Grid item xs={12} md={9} sx={{ mt: 1, paddingRight: '100px' }}>
+                                <Grid item xs={12} md={8} sx={{ mt: 1, paddingRight: '100px' }}>
                                     <Typography variant="body1" sx={{ fontSize: '20px', marginBottom: '10px' }}>
                                         Dedicated Internet Access (DIA) is a solution that provides an internet connection solely for your business. Unlike regular broadband connections, where bandwidth may be shared with other users, DIA ensures that your business has a fast, stable, and fully dedicated connection.
                                     </Typography>
                                     <Typography variant="body1" sx={{ fontSize: '20px', marginBottom: '10px' }}>
                                         With DIA, your business benefits from guaranteed bandwidth, enhanced security, and a consistent connection, making it the ideal choice for mission-critical applications and high-demand environments.
                                     </Typography>
-
-                                    {/* <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
-                                        Benefits of DIA
-                                    </Typography>
-                                    <Grid sx={{
-                                        p: 1,
-                                        m: 5,
-                                        borderRadius: 1,
-                                        bgcolor: 'background.default',
-                                        display: 'grid',
-                                        textAlign: 'center',
-                                        marginTop: '10px',
-                                        lineHeight: '10px',
-                                        gridTemplateColumns: { md: '1fr 1fr' },
-                                        gap: 2,
-                                    }}>
-                                        <Card>
-                                            <CardContent sx={{fontWeight: 'bold', mt: 1, color: '#7367EF' }}>
-                                                Dedicated Bandwidth
-                                            </CardContent>
-                                        </Card>
-                                        <Card>
-                                            <CardContent  sx={{fontWeight: 'bold', mt: 1, color: '#7367EF' }}>
-                                                High Availability
-                                            </CardContent>
-                                        </Card>
-                                        <Card>
-                                            <CardContent  sx={{fontWeight: 'bold', mt: 1, color: '#7367EF' }}>
-                                                Advanced Security
-                                            </CardContent>
-                                        </Card>
-                                        <Card>
-                                            <CardContent  sx={{fontWeight: 'bold', mt: 1, color: '#7367EF' }}>
-                                                Personalized Support
-                                            </CardContent>
-                                        </Card>
-                                    </Grid> */}
                                 </Grid>
-                                <Grid item xs={12} md={3} position="relative" display="flex" justifyContent="center">
+                                <Grid item xs={12} md={4}>
                                     <img
                                         src={diaImage}
                                         alt="DIA Services"
-                                        style={{ width: '350px', height: '350px', borderRadius: '8px', marginRight: '50px' }}
+                                        style={{ width: '300px', height: 'auto', borderRadius: '8px'}}
                                     />
                                 </Grid>
                             </Grid>
@@ -145,7 +108,7 @@ const DIAServiceDetails = () => {
                                     <img
                                         src={diaServiceImage2}
                                         alt="Brazil Connectivity"
-                                        style={{ width: 'auto', height: '350px', position: 'relative' }}
+                                        style={{ width: '350px', height: '350px', position: 'relative' }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
