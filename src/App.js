@@ -23,6 +23,8 @@ import BroadbandDetails from './pages/BroadbandDetails';
 import DIAServiceDetails from './pages/DIAServiceDetails';
 import EPLServiceDetails from './pages/EPLServiceDetails';
 import PortsServiceDetails from './pages/PortsServiceDetails';
+import LanToLanServiceDetails from './pages/LanToLanServiceDetails';
+
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -79,6 +81,17 @@ const App = () => {
                     <Breadcrumb />
                   </Container>
                   <PortsServiceDetails />
+                </>
+              }
+            />
+             <Route
+              path="/services/lan"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <LanToLanServiceDetails />
                 </>
               }
             />

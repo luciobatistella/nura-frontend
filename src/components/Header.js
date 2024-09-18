@@ -89,6 +89,9 @@ const Header = ({ toggleTheme, isDarkTheme }) => {
               <MenuItem component={Link} to="/services/ports" onClick={handleServicesMenuClose}>
                 Ports
               </MenuItem>
+              <MenuItem component={Link} to="/services/lan" onClick={handleServicesMenuClose}>
+                Lan to Lan
+              </MenuItem>
             </Menu>
 
             <Typography component={Link} to="/support" variant="body1" sx={getLinkStyle('/support')}>
