@@ -31,6 +31,7 @@ const Footer = () => {
             <Link href="/services/lan" sx={{ display: 'block', mb: 1, color: '#7367F0', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
              LAN TO LAN
             </Link>
+            
           </Grid>
           {/* <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>

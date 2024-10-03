@@ -80,14 +80,24 @@ const Header = ({ toggleTheme, isDarkTheme }) => {
               <MenuItem component={Link} to="/services/dia" onClick={handleServicesMenuClose}>
                 DIA
               </MenuItem>
-              <MenuItem component={Link} to="/services/epl" onClick={handleServicesMenuClose}>
-                EPL
-              </MenuItem>
               <MenuItem component={Link} to="/services/broadband" onClick={handleServicesMenuClose}>
                 Broadband
               </MenuItem>
+              <MenuItem component={Link} to="/services/epl" onClick={handleServicesMenuClose}>
+                EPL
+              </MenuItem>
+              
               <MenuItem component={Link} to="/services/ports" onClick={handleServicesMenuClose}>
                 Ports
+              </MenuItem>
+              <MenuItem component={Link} to="/services/antiddos" onClick={handleServicesMenuClose}>
+                Anti-DDOS
+              </MenuItem>
+              <MenuItem component={Link} to="/services/colocation" onClick={handleServicesMenuClose}>
+                Colocation
+              </MenuItem>
+              <MenuItem component={Link} to="/services/cloud" onClick={handleServicesMenuClose}>
+                Cloud
               </MenuItem>
               <MenuItem component={Link} to="/services/lan" onClick={handleServicesMenuClose}>
                 Lan to Lan
@@ -125,9 +135,9 @@ const Header = ({ toggleTheme, isDarkTheme }) => {
               <MenuItem component={Link} to="/personal-data" onClick={handleAvatarMenuClose}>
                 Personal Data
               </MenuItem>
-              <MenuItem component={Link} to="/projects" onClick={handleAvatarMenuClose}>
+              {/* <MenuItem component={Link} to="/projects" onClick={handleAvatarMenuClose}>
                 My Projects
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem component={Link} to="/financial-history" onClick={handleAvatarMenuClose}>
                 History Finance
               </MenuItem>

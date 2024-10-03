@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Grid, Card, CardContent, Container } from '@mui/material';
-import PersonalData from '../components/PersonalData';
+import { Grid, Container } from '@mui/material';
+import PersonalDataMini from '../components/PersonalDataMini';
 import ProjectsUser from '../components/ProjectsUser';
 import ServicesDashboard from '../components/ServicesDashboard';
 
@@ -18,7 +18,7 @@ const Dashboard = () => {
             <ProjectsUser userName={userName} />
           </Grid>
           <Grid item xs={12} md={4} lg={4}>
-            <PersonalData />
+            <PersonalDataMini />
           </Grid>
           <Grid item xs={12} sx={{ padding: '20px 0px 20px 0px', marginBottom: '0px' }}>
             <ServicesDashboard />

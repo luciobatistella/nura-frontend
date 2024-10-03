@@ -24,6 +24,9 @@ import DIAServiceDetails from './pages/DIAServiceDetails';
 import EPLServiceDetails from './pages/EPLServiceDetails';
 import PortsServiceDetails from './pages/PortsServiceDetails';
 import LanToLanServiceDetails from './pages/LanToLanServiceDetails';
+import CloudServiceDetails from './pages/CloudServiceDetails';
+import ColocationServiceDetails from './pages/ColocationServiceDetails';
+import AntiDDOSServiceDetails from './pages/AntiDDOSServiceDetails';
 
 
 const App = () => {
@@ -81,6 +84,39 @@ const App = () => {
                     <Breadcrumb />
                   </Container>
                   <PortsServiceDetails />
+                </>
+              }
+            />
+            <Route
+              path="/services/cloud"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <CloudServiceDetails />
+                </>
+              }
+            />
+            <Route
+              path="/services/colocation"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <ColocationServiceDetails />
+                </>
+              }
+            />
+             <Route
+              path="/services/antiddos"
+              element={
+                <>
+                  <Container sx={{ flexGrow: 1, mt: '130px' }}>
+                    <Breadcrumb />
+                  </Container>
+                  <AntiDDOSServiceDetails />
                 </>
               }
             />

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   TextField,
@@ -13,7 +13,9 @@ import {
   Button,
   Menu,
   MenuItem,
-  Tooltip
+  Tooltip,
+  Badge,
+  Box
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -41,7 +43,7 @@ const Signature = () => {
 
   const rowsPerPage = 5;
 
-  // Histórico de Janeiro de 2023 a Dezembro de 2024, com mais projetos e todos os serviços em 2024
+  // Histórico de Janeiro de 2023 a Dezembro de 2024
   const data = [
     { month: 'Jan/2023', project: 'Project 1', services: ['DIA', 'Broadband'], cost: 'R$ 0,99' },
     { month: 'Feb/2023', project: 'Project 2', services: ['EPL', 'Ports'], cost: 'R$ 7,50' },
@@ -108,56 +110,65 @@ const Signature = () => {
     }
   };
 
-  // Filtered data based on search term and month
+  // Filtrar dados com base no mês e termo de pesquisa
   const filteredData = data.filter((row) =>
     row.project.toLowerCase().includes(searchTerm.toLowerCase()) &&
     row.month === month
   );
 
-  // Paginate the filtered data
+  // Paginar os dados filtrados
   const startIndex = (page - 1) * rowsPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
 
-  // Function to render icons with tooltips based on services, indicating active and inactive services
+  // Função para renderizar ícones com badge e tooltips, sem badge se o ícone estiver inativo
   const renderServiceIcons = (services, activeServices = []) => {
-    return services.map((service, index) => {
-      const isActive = activeServices.includes(service);
-      const iconColor = isActive ? 'primary' : grey[500]; // Active services are primary, inactive are grey
-      switch (service) {
-        case 'DIA':
+    return (
+      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
+        {services.map((service, index) => {
+          const isActive = activeServices.includes(service);
+          const iconColor = isActive ? 'primary' : grey[500]; // Active services are primary, inactive are grey
+
+          const serviceIcons = {
+            DIA: <CloudIcon sx={{ color: iconColor, width: 32, height: 32 }} />,
+            EPL: <LocalShippingIcon sx={{ color: iconColor, width: 32, height: 32 }} />,
+            Broadband: <WifiIcon sx={{ color: iconColor, width: 32, height: 32 }} />,
+            Ports: <StorageIcon sx={{ color: iconColor, width: 32, height: 32 }} />,
+            'LAN to LAN': <LanIcon sx={{ color: iconColor, width: 32, height: 32 }} />
+          };
+
+          // Somente adiciona badge se o ícone estiver ativo
           return (
-            <Tooltip title="DIA" key={index}>
-              <CloudIcon style={{ color: iconColor }} />
-            </Tooltip>
+            <Box key={index} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {isActive ? (
+                <Badge
+                  badgeContent={index + 1}
+                  color="primary"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      backgroundColor: '#7367EF',
+                      color: '#fff',
+                      fontSize: '0.75rem',
+                    },
+                  }}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                >
+                  <Tooltip title={service}>
+                    {serviceIcons[service]}
+                  </Tooltip>
+                </Badge>
+              ) : (
+                <Tooltip title={service}>
+                  {serviceIcons[service]}
+                </Tooltip>
+              )}
+            </Box>
           );
-        case 'EPL':
-          return (
-            <Tooltip title="EPL" key={index}>
-              <LocalShippingIcon style={{ color: iconColor }} />
-            </Tooltip>
-          );
-        case 'Broadband':
-          return (
-            <Tooltip title="Broadband" key={index}>
-              <WifiIcon style={{ color: iconColor }} />
-            </Tooltip>
-          );
-        case 'Ports':
-          return (
-            <Tooltip title="Ports" key={index}>
-              <StorageIcon style={{ color: iconColor }} />
-            </Tooltip>
-          );
-        case 'LAN to LAN':
-          return (
-            <Tooltip title="LAN to LAN" key={index}>
-              <LanIcon style={{ color: iconColor }} />
-            </Tooltip>
-          );
-        default:
-          return null;
-      }
-    });
+        })}
+      </Box>
+    );
   };
 
   return (
