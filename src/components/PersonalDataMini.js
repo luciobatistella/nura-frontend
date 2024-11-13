@@ -19,7 +19,6 @@ const PersonalDataCard = () => {
   
     <Paper
       sx={{
-        width: 300,
         padding: 3,
         borderRadius: '6px',
         height: '100%',

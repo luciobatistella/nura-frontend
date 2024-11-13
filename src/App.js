@@ -3,9 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box, Container } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { lightTheme, darkTheme } from './theme';
-import Header from './components/Header';
 import Breadcrumb from './components/Breadcrumb';
-import Footer from './components/Footer';
 
 import Dashboard from './pages/Dashboard';
 import Services from './pages/Services';
@@ -27,6 +25,8 @@ import LanToLanServiceDetails from './pages/LanToLanServiceDetails';
 import CloudServiceDetails from './pages/CloudServiceDetails';
 import ColocationServiceDetails from './pages/ColocationServiceDetails';
 import AntiDDOSServiceDetails from './pages/AntiDDOSServiceDetails';
+import WebAdmin from './pages/WebAdmin';
+import WebAdminDetail from './pages/WebAdminDetail';
 
 
 const App = () => {
@@ -41,7 +41,6 @@ const App = () => {
       <CssBaseline />
       <Router>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Header toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
           <Routes>
             <Route
               path="/services/broadband"
@@ -109,7 +108,7 @@ const App = () => {
                 </>
               }
             />
-             <Route
+            <Route
               path="/services/antiddos"
               element={
                 <>
@@ -120,7 +119,7 @@ const App = () => {
                 </>
               }
             />
-             <Route
+            <Route
               path="/services/lan"
               element={
                 <>
@@ -129,6 +128,22 @@ const App = () => {
                   </Container>
                   <LanToLanServiceDetails />
                 </>
+              }
+            />
+            <Route
+              path="/webadmin"
+              element={
+                <Container component="main" sx={{ flexGrow: 1, minWidth: '100%', marginLeft: '270px', paddingRight: '270px !important' }}>
+                  <WebAdmin />
+                </Container>
+              }
+            />
+            <Route
+              path="/WebAdminDetail"
+              element={
+                <Container component="main" sx={{ flexGrow: 1, minWidth: '100%', marginLeft: '270px', paddingRight: '270px !important' }}>
+                  <WebAdminDetail />
+                </Container>
               }
             />
             <Route
@@ -154,7 +169,6 @@ const App = () => {
               }
             />
           </Routes>
-          <Footer />
         </Box>
       </Router>
     </ThemeProvider>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, Box, Typography, Card, CardContent, Button } from '@mui/material';
+import { Tabs, Tab, Box, Typography, Card, CardContent, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PublicIcon from '@mui/icons-material/Public';
 import { useNavigate } from 'react-router-dom'; // Importando o hook de navegação
@@ -38,7 +38,7 @@ const TabPanel = (props) => {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -62,35 +62,41 @@ const ServicesDashboard = () => {
     sessionStorage.setItem('selectedTab', newValue); // Armazena a aba selecionada
   };
 
+  const [open, setOpen] = useState(false); // State to manage modal open/close
+  const [selectedPdf, setSelectedPdf] = useState(null); // State to manage selected PDF
+
   const services = [
-    { speed: '10 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '50 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '100 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '200 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '300 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '500 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
-    { speed: '1000 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months' },
+    { speed: '10 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '../assets/Colors.pdf' },
+    { speed: '50 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf2.pdf' },
+    { speed: '100 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf3.pdf' },
+    { speed: '200 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf4.pdf' },
+    { speed: '300 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf5.pdf' },
+    { speed: '500 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf6.pdf' },
+    { speed: '1000 MBPS', price: '199,00', description: 'Business Broadband Connectivity\nProvided with Fiber\nEquipment Included, for current brand/model availability\nContract Term: 12 / 24 / 36 Months', pdf: '/path/to/pdf7.pdf' },
   ];
 
-  // Função para redirecionar ao clicar em "More Details"
-  const handleMoreDetailsClick = (serviceName) => {
-    navigate(`/services/${serviceName}`);
+  // Função para abrir o modal com o PDF selecionado
+  const handleMoreDetailsClick = (pdf) => {
+    setSelectedPdf(pdf);
+    setOpen(true); // Open modal
+  };
+
+  // Função para fechar o modal
+  const handleClose = () => {
+    setOpen(false); // Close modal
+    setSelectedPdf(null); // Clear selected PDF
   };
 
   return (
-    <Box sx={{ width: '100%', padding: '20px 0px 20px 0px', marginBottom: '0px' }}>
+    <Box sx={{ width: '100%', padding: '20px 0px 0px 0px', marginBottom: '0px' }}>
       <Box sx={{ textAlign: 'center', mt: 0 }}>
         <Typography variant="h5" color="#7367F0" fontWeight="bold">CHOOSE ONE OF THE OPTIONS</Typography>
       </Box>
       <Tabs value={value} onChange={handleChange} aria-label="services tabs" centered sx={{ width: '100%', padding: '20px 0px 20px 0px', marginBottom: '0px' }}>
         <Tab label="DIA" />
         <Tab label="Broadband" />
-        {/* <Tab label="EPL Metropoli" /> */}
         <Tab label="EPL´s" />
         <Tab label="Ports" />
-        {/* <Tab label="Anti-DDoS" /> */}
-        {/* <Tab label="Colocation" /> */}
-        {/* <Tab label="Cloud" /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
         <Typography variant="h6">Dedicated Internet Access</Typography>
@@ -126,10 +132,11 @@ const ServicesDashboard = () => {
                   variant="text"
                   sx={{
                     mt: 1,
+                    ml: 1,
                     color: '#7367F0',
                     fontWeight: 'bold',
                   }}
-                  onClick={() => handleMoreDetailsClick(service.speed)}
+                  onClick={() => handleMoreDetailsClick(service.pdf)}
                 >
                   More Details
                 </Button>
@@ -138,30 +145,26 @@ const ServicesDashboard = () => {
           </StyledCard>
         ))}
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Typography variant="h6">EPL Metropoli</Typography>
-        <Typography variant="body1">Here is the content for EPL Metropoli.</Typography>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Typography variant="h6">EPL Datacenters</Typography>
-        <Typography variant="body1">Here is the content for EPL Datacenters.</Typography>
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <Typography variant="h6">Ports</Typography>
-        <Typography variant="body1">Here is the content for Ports.</Typography>
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        <Typography variant="h6">Anti-DDoS</Typography>
-        <Typography variant="body1">Here is the content for Anti-DDoS.</Typography>
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        <Typography variant="h6">Colocation</Typography>
-        <Typography variant="body1">Here is the content for Colocation.</Typography>
-      </TabPanel>
-      <TabPanel value={value} index={7}>
-        <Typography variant="h6">Cloud</Typography>
-        <Typography variant="body1">Here is the content for Cloud.</Typography>
-      </TabPanel>
+      {/* Modal to show PDF */}
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+        <DialogTitle>More Details</DialogTitle>
+        <DialogContent>
+          {selectedPdf ? (
+            <iframe
+              src={selectedPdf}
+              title="PDF Details"
+              width="100%"
+              height="600px"
+              style={{ border: 'none' }}
+            />
+          ) : (
+            <Typography>No details available</Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">Close</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -15,7 +15,7 @@ const ServiceSummary = () => {
   return (
     <Box sx={{ width: '100%', position: 'sticky', top: '150px' }}>
       <Card>
-      <CardContent sx={{ padding: '20px 20px 0px 20px', marginBottom: '0px' }}>
+      <CardContent sx={{ padding: '0px 0px 0px 0px', marginBottom: '0px' }}>
           <List>
             <ListItem>
               <ListItemText primary="Service" secondary={fakeData.selectedService || 'N/A'} />
