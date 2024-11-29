@@ -1,9 +1,24 @@
-import React, { useState, useMemo } from 'react';
-import { Box, Card, CardContent, Typography, Grid, Tabs, Tab, Autocomplete, TextField, InputAdornment, IconButton, Checkbox, Menu, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Tabs,
+  Tab,
+  Autocomplete,
+  TextField,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ServiceOptions from './ServiceOptions';
+import PaymentOptions from './PaymentOptions';
+import Terms from './Terms';
+
 import { locations, locationDetails, flagUrls } from '../constants/locations';
 
 const SelectableCard = styled(Card)(({ selected }) => ({
@@ -20,18 +35,18 @@ const SelectableCard = styled(Card)(({ selected }) => ({
 }));
 
 const ServiceEPLMetro = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [selectedTabOrigin, setSelectedTabOrigin] = useState(0);
-  const [selectedTabDestination, setSelectedTabDestination] = useState(0);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAdditionalLocation, setSelectedAdditionalLocation] = useState('');
-  const [selectedDestinationLocation, setSelectedDestinationLocation] = useState(null);
   const [selectedDestinationAdditionalLocation, setSelectedDestinationAdditionalLocation] = useState('');
-  const [anchorElOrigin, setAnchorElOrigin] = useState(null);
-  const [anchorElDestination, setAnchorElDestination] = useState(null);
-  const [checkedCountriesOrigin, setCheckedCountriesOrigin] = useState([]);
-  const [checkedCountriesDestination, setCheckedCountriesDestination] = useState([]);
   const [visibleLocationsOrigin, setVisibleLocationsOrigin] = useState(11);
-  const [visibleLocationsDestination, setVisibleLocationsDestination] = useState(11);
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setSelectedLocation(null);
+    setSelectedAdditionalLocation('');
+  };
 
   const handleTabChangeOrigin = (event, newValue) => {
     setSelectedTabOrigin(newValue);
@@ -40,146 +55,156 @@ const ServiceEPLMetro = () => {
     setVisibleLocationsOrigin(11);
   };
 
-  const handleTabChangeDestination = (event, newValue) => {
-    setSelectedTabDestination(newValue);
-    setSelectedDestinationLocation(null);
-    setSelectedDestinationAdditionalLocation('');
-    setVisibleLocationsDestination(11);
-  };
-
-  const handleFilterClickOrigin = (event) => {
-    setAnchorElOrigin(event.currentTarget);
-  };
-
-  const handleFilterCloseOrigin = () => {
-    setAnchorElOrigin(null);
-  };
-
-  const handleFilterClickDestination = (event) => {
-    setAnchorElDestination(event.currentTarget);
-  };
-
-  const handleFilterCloseDestination = () => {
-    setAnchorElDestination(null);
-  };
-
-  const handleCountryCheckOrigin = (country) => {
-    setCheckedCountriesOrigin((prev) =>
-      prev.includes(country) ? prev.filter((c) => c !== country) : [...prev, country]
-    );
-  };
-
-  const handleCountryCheckDestination = (country) => {
-    setCheckedCountriesDestination((prev) =>
-      prev.includes(country) ? prev.filter((c) => c !== country) : [...prev, country]
-    );
-  };
-
-  const groupedCountries = useMemo(() => {
-    return locations[0].reduce((acc, location) => {
-      if (acc[location.country]) {
-        acc[location.country].cityCount += 1;
-      } else {
-        acc[location.country] = {
-          name: location.country,
-          flag: flagUrls[location.country],
-          cityCount: 1,
-        };
-      }
-      return acc;
-    }, {});
-  }, [locations]);
-
   const loadMoreLocationsOrigin = () => {
     setVisibleLocationsOrigin((prev) => prev + 11);
-  };
-
-  const loadMoreLocationsDestination = () => {
-    setVisibleLocationsDestination((prev) => prev + 11);
   };
 
   return (
     <Box sx={{ width: '100%', mt: 1 }}>
       <Grid container spacing={2}>
-        {/* Seção de Origem */}
+        {/* Select Option Section */}
         <Grid item xs={12} md={12}>
           <Card>
             <CardContent sx={{ padding: '20px 30px' }}>
-              <Typography variant="h6" fontWeight="bold">
-                Origin - Select Location
-              </Typography>
-              <Box display="flex" alignItems="center">
-                <Tabs value={selectedTabOrigin} onChange={handleTabChangeOrigin} aria-label="location tabs">
-                  <Tab label={`South America`} />
-                  <Tab label={`North America`} />
-                  <Tab label={`Europe`} />
-                </Tabs>
-                <IconButton onClick={handleFilterClickOrigin} sx={{ ml: 2 }}>
-                  <FilterListIcon />
-                </IconButton>
-              </Box>
-
-              <Menu anchorEl={anchorElOrigin} open={Boolean(anchorElOrigin)} onClose={handleFilterCloseOrigin}>
-                {Object.values(groupedCountries).map((country, index) => (
-                  <MenuItem key={index} onClick={() => handleCountryCheckOrigin(country.name)}>
-                    <Checkbox checked={checkedCountriesOrigin.includes(country.name)} />
-                    <Box component="img" src={country.flag} alt={`${country.name} flag`} sx={{ width: 16, height: 16, marginRight: '10px' }} />
-                    {country.name} - {country.cityCount} cities
-                  </MenuItem>
-                ))}
-              </Menu>
-
-              <Box sx={{ mt: 2, width: '100%' }}>
-                <Grid container spacing={1}>
-                  {locations[selectedTabOrigin]
-                    .filter((location) => checkedCountriesOrigin.length === 0 || checkedCountriesOrigin.includes(location.country))
-                    .slice(0, visibleLocationsOrigin)
-                    .map((location, index) => (
-                      <Grid item xs={3} key={index}>
-                        <SelectableCard
-                          selected={selectedLocation === location.name}
-                          onClick={() => {
-                            setSelectedLocation(location.name);
-                            setSelectedAdditionalLocation('');
-                          }}
-                        >
-                          <CardContent sx={{ display: 'flex', alignItems: 'center', padding: '5px', marginBottom: '-15px !important' }}>
-                            <Box
-                              component="img"
-                              src={flagUrls[location.country]}
-                              alt={`${location.country} flag`}
-                              sx={{ width: 25, height: 15, borderRadius: '10%', marginRight: '10px', marginLeft: '-20px' }}
-                            />
-                            <Box>
-                              <Typography variant="h6" sx={{ fontSize: '1em', color: selectedLocation === location.name ? '#7367F0' : 'inherit' }}>
-                                {location.name}
-                              </Typography>
-                              <Typography variant="body2" color="textSecondary">
-                                {location.records} records
-                              </Typography>
-                            </Box>
-                          </CardContent>
-                        </SelectableCard>
-                      </Grid>
-                    ))}
-
-                  {visibleLocationsOrigin < locations[selectedTabOrigin].length && (
-                    <Grid item xs={3}>
-                      <SelectableCard onClick={loadMoreLocationsOrigin}>
-                        <Typography sx={{ color: '#7367F0', textAlign: 'center', height: '60px', lineHeight: '60px' }}>
-                          Load More
-                        </Typography>
-                      </SelectableCard>
-                    </Grid>
-                  )}
+              <Typography variant="h6" fontWeight="bold">Select Option</Typography>
+              <Grid container spacing={2} sx={{ mt: 2 }}>
+                <Grid item xs={6}>
+                  <SelectableCard
+                    selected={selectedOption === 'Metropolitan'}
+                    onClick={() => handleOptionClick('Metropolitan')}
+                  >
+                    <CardContent>
+                      <Typography textAlign="center" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+                        Both Side
+                      </Typography>
+                      <Typography textAlign="center">Metropolitan address</Typography>
+                    </CardContent>
+                  </SelectableCard>
                 </Grid>
-              </Box>
+                <Grid item xs={6}>
+                  <SelectableCard
+                    selected={selectedOption === 'Datacenter'}
+                    onClick={() => handleOptionClick('Datacenter')}
+                  >
+                    <CardContent>
+                      <Typography textAlign="center" sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+                        One Side
+                      </Typography>
+                      <Typography textAlign="center">
+                        Datacenter and Metropolitan address
+                      </Typography>
+                    </CardContent>
+                  </SelectableCard>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
 
-              {selectedLocation && (
+        {/* Origin Section */}
+        {selectedOption && (
+          <Grid item xs={12} md={12}>
+            <Card>
+              <CardContent sx={{ padding: '20px 30px' }}>
+                <Typography variant="h6" fontWeight="bold">Origin</Typography>
+
+                {/* Exibe abas e cartões apenas para "One Side" */}
+                {selectedOption === 'Datacenter' && (
+                  <>
+                    <Box display="flex" alignItems="center">
+                      <Tabs value={selectedTabOrigin} onChange={handleTabChangeOrigin}>
+                        <Tab label="South America" />
+                        <Tab label="North America" />
+                        <Tab label="Europe" />
+                      </Tabs>
+                      <IconButton sx={{ ml: 2 }}>
+                        <FilterListIcon />
+                      </IconButton>
+                    </Box>
+                    <Box sx={{ mt: 2, width: '100%' }}>
+                      <Grid container spacing={1}>
+                        {locations[selectedTabOrigin]
+                          .slice(0, visibleLocationsOrigin)
+                          .map((location, index) => (
+                            <Grid item xs={3} key={index}>
+                              <SelectableCard
+                                selected={selectedLocation === location.name}
+                                onClick={() => {
+                                  setSelectedLocation(location.name);
+                                  setSelectedAdditionalLocation('');
+                                }}
+                              >
+                                <CardContent
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    padding: '5px',
+                                    marginBottom: '-15px !important',
+                                  }}
+                                >
+                                  <Box
+                                    component="img"
+                                    src={flagUrls[location.country]}
+                                    alt={`${location.country} flag`}
+                                    sx={{
+                                      width: 25,
+                                      height: 15,
+                                      borderRadius: '10%',
+                                      marginRight: '10px',
+                                      marginLeft: '-20px',
+                                    }}
+                                  />
+                                  <Box>
+                                    <Typography
+                                      variant="h6"
+                                      sx={{
+                                        fontSize: '1em',
+                                        color: selectedLocation === location.name ? '#7367F0' : 'inherit',
+                                      }}
+                                    >
+                                      {location.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                      {location.records} records
+                                    </Typography>
+                                  </Box>
+                                </CardContent>
+                              </SelectableCard>
+                            </Grid>
+                          ))}
+                        {visibleLocationsOrigin < locations[selectedTabOrigin].length && (
+                          <Grid item xs={3}>
+                            <SelectableCard
+                              onClick={loadMoreLocationsOrigin}
+                              sx={{ backgroundColor: '#efefef' }}
+                            >
+                              <Typography
+                                sx={{
+                                  color: '#7367F0',
+                                  textAlign: 'center',
+                                  height: '60px',
+                                  lineHeight: '60px',
+                                }}
+                              >
+                                Show More ...
+                              </Typography>
+                            </SelectableCard>
+                          </Grid>
+                        )}
+                      </Grid>
+                    </Box>
+                  </>
+                )}
+
+                {/* Exibe sempre o campo "Autocomplete" */}
                 <Autocomplete
                   fullWidth
                   sx={{ mt: 2 }}
-                  options={locationDetails[selectedLocation]?.map((option) => option.name) || []}
+                  options={
+                    selectedOption === 'Datacenter'
+                      ? locationDetails[selectedLocation]?.map((option) => option.name) || []
+                      : []
+                  }
                   value={selectedAdditionalLocation}
                   onChange={(event, newValue) => {
                     setSelectedAdditionalLocation(newValue);
@@ -187,7 +212,7 @@ const ServiceEPLMetro = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label={`Additional Locations for ${selectedLocation}`}
+                      label="Additional Locations"
                       InputProps={{
                         ...params.InputProps,
                         startAdornment: (
@@ -199,120 +224,53 @@ const ServiceEPLMetro = () => {
                     />
                   )}
                 />
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
 
-        {/* Seção de Destino - Apenas visível após completar a Seção de Origem */}
-        {selectedLocation && selectedAdditionalLocation && (
-          <Grid item xs={12} md={12} sx={{ mt: 2 }}>
+        {/* Destination Section */}
+        {selectedOption && (
+          <Grid item xs={12} md={12}>
             <Card>
               <CardContent sx={{ padding: '20px 30px' }}>
-                <Typography variant="h6" fontWeight="bold">
-                  Destination - Select Location
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <Tabs value={selectedTabDestination} onChange={handleTabChangeDestination} aria-label="destination tabs">
-                    <Tab label={`South America`} />
-                    <Tab label={`North America`} />
-                    <Tab label={`Europe`} />
-                  </Tabs>
-                  <IconButton onClick={handleFilterClickDestination} sx={{ ml: 2 }}>
-                    <FilterListIcon />
-                  </IconButton>
-                </Box>
+                <Typography variant="h6" fontWeight="bold">Destination</Typography>
 
-                <Menu anchorEl={anchorElDestination} open={Boolean(anchorElDestination)} onClose={handleFilterCloseDestination}>
-                  {Object.values(groupedCountries).map((country, index) => (
-                    <MenuItem key={index} onClick={() => handleCountryCheckDestination(country.name)}>
-                      <Checkbox checked={checkedCountriesDestination.includes(country.name)} />
-                      <Box component="img" src={country.flag} alt={`${country.name} flag`} sx={{ width: 16, height: 16, marginRight: '10px' }} />
-                      {country.name} - {country.cityCount} cities
-                    </MenuItem>
-                  ))}
-                </Menu>
-
-                <Box sx={{ mt: 2, width: '100%' }}>
-                  <Grid container spacing={1}>
-                    {locations[selectedTabDestination]
-                      .filter((location) => checkedCountriesDestination.length === 0 || checkedCountriesDestination.includes(location.country))
-                      .slice(0, visibleLocationsDestination)
-                      .map((location, index) => (
-                        <Grid item xs={3} key={index}>
-                          <SelectableCard
-                            selected={selectedDestinationLocation === location.name}
-                            onClick={() => {
-                              setSelectedDestinationLocation(location.name);
-                              setSelectedDestinationAdditionalLocation('');
-                            }}
-                          >
-                            <CardContent sx={{ display: 'flex', alignItems: 'center', padding: '5px', marginBottom: '-15px !important' }}>
-                              <Box
-                                component="img"
-                                src={flagUrls[location.country]}
-                                alt={`${location.country} flag`}
-                                sx={{ width: 25, height: 15, borderRadius: '10%', marginRight: '10px', marginLeft: '-20px' }}
-                              />
-                              <Box>
-                                <Typography variant="h6" sx={{ fontSize: '1em', color: selectedDestinationLocation === location.name ? '#7367F0' : 'inherit' }}>
-                                  {location.name}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                  {location.records} records
-                                </Typography>
-                              </Box>
-                            </CardContent>
-                          </SelectableCard>
-                        </Grid>
-                      ))}
-
-                    {visibleLocationsDestination < locations[selectedTabDestination].length && (
-                      <Grid item xs={3}>
-                        <SelectableCard onClick={loadMoreLocationsDestination}>
-                          <Typography sx={{ color: '#7367F0', textAlign: 'center', height: '60px', lineHeight: '60px' }}>
-                            Load More
-                          </Typography>
-                        </SelectableCard>
-                      </Grid>
-                    )}
-                  </Grid>
-                </Box>
-
-                {selectedDestinationLocation && (
-                  <Autocomplete
-                    fullWidth
-                    sx={{ mt: 2 }}
-                    options={locationDetails[selectedDestinationLocation]?.map((option) => option.name) || []}
-                    value={selectedDestinationAdditionalLocation}
-                    onChange={(event, newValue) => {
-                      setSelectedDestinationAdditionalLocation(newValue);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label={`Additional Locations for ${selectedDestinationLocation}`}
-                        InputProps={{
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <RoomOutlinedIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    )}
-                  />
-                )}
+                {/* Apenas o campo "Autocomplete" é exibido para Destination */}
+                <Autocomplete
+                  fullWidth
+                  sx={{ mt: 2 }}
+                  options={[]}
+                  value={selectedDestinationAdditionalLocation}
+                  onChange={(event, newValue) => {
+                    setSelectedDestinationAdditionalLocation(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Additional Locations"
+                      InputProps={{
+                        ...params.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <RoomOutlinedIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
               </CardContent>
             </Card>
           </Grid>
         )}
       </Grid>
 
-      {/* Adicionando ServiceOptions ao final da seleção completa */}
-      {selectedDestinationLocation && selectedDestinationAdditionalLocation && <ServiceOptions />}
+      {/* <ServiceOptions /> */}
+      <PaymentOptions />
+      <Terms />
     </Box>
+    
   );
 };
 
